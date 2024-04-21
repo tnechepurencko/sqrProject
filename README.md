@@ -5,3 +5,6 @@
 - GET: /login?uname=\<uname>&pwd=\<pwd>  
 - GET: /logout?uname=\<uname>
 - POST: /registration?uname=\<uname>&pwd=\<pwd>
+- POST: /create_store?uname=\<uname>&sname=\<sname>
+- POST: /remove_store?uname=\<uname>&sname=\<sname>
+- POST: /track_store?sname=\<sname>
