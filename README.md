@@ -2,6 +2,6 @@
 
 ## Endpoints
 
-- GET: /login?uname=<uname>&pwd=<pwd>  
-- GET: /logout?uname=<uname>
+- GET: /login?uname=\<uname>&pwd=<pwd>  
+- GET: /logout?uname=\<uname>
 - POST: /registration?uname=<uname>&pwd=<pwd>
