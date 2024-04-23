@@ -44,15 +44,44 @@ def registration(uname, pwd):
 
 @app.post('/create_store')
 def create_store(uname, sname):
-    return Response(status_code=status.HTTP_200_OK, content=two_param_check(uname, sname), media_type='text/plain')
+    pass
 
 
 @app.post('/remove_store')
 def remove_store(uname, sname):
-    return Response(status_code=status.HTTP_200_OK, content=two_param_check(uname, sname), media_type='text/plain')
+    pass
 
 
 @app.post('/track_store')
 def track_store(sname):
-    return Response(status_code=status.HTTP_200_OK, content=one_param_check(sname), media_type='text/plain')
+    pass
 
+
+@app.post('/add_package')
+def add_package(pname, sname):
+    pass
+
+
+@app.post('/rem_package')
+def rem_package(pname, sname):
+    pass
+
+
+@app.get('/dif_paths')
+def dif_paths(sname1, sname2):
+    pass
+
+
+@app.get('/dif_package')
+def dif_package(package1, package2):
+    pass
+
+
+@app.get('/size_package')
+def size_package(package):
+    pass
+
+
+@app.get('/package_exists')
+def package_exists(package):
+    pass
