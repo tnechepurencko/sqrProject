@@ -1,57 +1,48 @@
-from flask import Flask, redirect, url_for, request
+from fastapi import FastAPI
+from starlette import status
+from starlette.responses import Response
+import uvicorn
 
-app = Flask(__name__)
+app = FastAPI()
 
 
-@app.route('/success/<p1>')
 def one_param_check(p1):
     return '%s' % p1
 
 
-@app.route('/success/<p1>/<p2>')
 def two_param_check(p1, p2):
     return '%s %s' % (p1, p2)
 
 
-@app.route('/login', methods=['GET'])
-def login():
-    user = request.args.get('uname')
-    pwd = request.args.get('pwd')
-    return redirect(url_for('two_param_check', p1=user, p2=pwd))
+@app.get('/login')
+def login(uname, pwd):
+    return Response(status_code=status.HTTP_200_OK, content=two_param_check(uname, pwd), media_type='text/plain')
 
 
-@app.route('/logout', methods=['GET'])
-def logout():
-    user = request.args.get('uname')
-    return redirect(url_for('one_param_check', p1=user))
+@app.get('/logout')
+def logout(uname):
+    return Response(status_code=status.HTTP_200_OK, content=one_param_check(uname), media_type='text/plain')
 
 
-@app.route('/registration', methods=['POST'])
-def registration():
-    user = request.args.get('uname')
-    pwd = request.args.get('pwd')
-    return redirect(url_for('two_param_check', p1=user, p2=pwd))
+@app.post('/registration')
+def registration(uname, pwd):
+    return Response(status_code=status.HTTP_200_OK, content=two_param_check(uname, pwd), media_type='text/plain')
 
 
-@app.route('/create_store', methods=['POST'])
-def create_store():
-    user = request.args.get('uname')
-    store = request.args.get('sname')
-    return redirect(url_for('two_param_check', p1=user, p2=store))
+@app.post('/create_store')
+def create_store(uname, sname):
+    return Response(status_code=status.HTTP_200_OK, content=two_param_check(uname, sname), media_type='text/plain')
 
 
-@app.route('/remove_store', methods=['POST'])
-def remove_store():
-    user = request.args.get('uname')
-    store = request.args.get('sname')
-    return redirect(url_for('two_param_check', p1=user, p2=store))
+@app.post('/remove_store')
+def remove_store(uname, sname):
+    return Response(status_code=status.HTTP_200_OK, content=two_param_check(uname, sname), media_type='text/plain')
 
 
-@app.route('/track_store', methods=['POST'])
-def track_store():
-    store = request.args.get('sname')
-    return redirect(url_for('one_param_check', p1=store))
+@app.post('/track_store')
+def track_store(sname):
+    return Response(status_code=status.HTTP_200_OK, content=one_param_check(sname), media_type='text/plain')
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    uvicorn.run(app, host="localhost", port=5000, log_level="info")
