@@ -1,0 +1,4 @@
+**/__pycache__/
+.idea/
+nix_stores/
+users.db
