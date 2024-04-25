@@ -6,10 +6,11 @@ from shutil import rmtree
 import subprocess
 import json
 
-from db import Users
+from db import Users, Stores
 
 app = FastAPI()
 users_db = Users()
+stores_db = Stores()
 
 nix_stores_path = './nix_stores'
 
@@ -53,7 +54,7 @@ def create_store(uname, sname):
     try:
         store_path = Path(f'{nix_stores_path}/{uname}/{sname}')
         store_path.mkdir(parents=True)
-        # TODO : Add store to database
+        stores_db.insert(uname, sname, store_path)
     except FileExistsError:
         return get_response(status.HTTP_400_BAD_REQUEST, 'Store already exists')
     return get_response(status.HTTP_200_OK, one_param_check(store_path))
@@ -61,8 +62,7 @@ def create_store(uname, sname):
 
 @app.post('/get_stores')
 def get_stores(uname):
-    # TODO: get all stores for thus uname from database
-    pass
+    return stores_db.get_by_uname(uname)
 
 
 @app.post('/remove_store')
@@ -70,7 +70,7 @@ def remove_store(uname, sname):
     try:
         store_path = Path(f'{nix_stores_path}/{uname}/{sname}')
         rmtree(store_path)
-        # TODO : Remove store from database
+        stores_db.remove(uname, sname)
     except Exception as e:
         return get_response(status.HTTP_400_BAD_REQUEST, e)
     return get_response(status.HTTP_200_OK, one_param_check(store_path))
