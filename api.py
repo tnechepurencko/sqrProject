@@ -52,9 +52,10 @@ def registration(uname, pwd):
 @app.post('/create_store')
 def create_store(uname, sname):
     try:
-        store_path = Path(f'{nix_stores_path}/{uname}/{sname}')
+        store_path_str = f'{nix_stores_path}/{uname}/{sname}'
+        store_path = Path(store_path_str)
         store_path.mkdir(parents=True)
-        stores_db.insert(uname, sname, store_path)
+        stores_db.insert(uname, sname, store_path_str)
     except FileExistsError:
         return get_response(status.HTTP_400_BAD_REQUEST, 'Store already exists')
     return get_response(status.HTTP_200_OK, one_param_check(store_path))
@@ -139,7 +140,7 @@ def dif_paths(uname, sname1, sname2):
     set1 = set([f'/nix/store/{path}' for path in store_path1.iterdir()])
     set2 = set([f'/nix/store/{path}' for path in store_path2.iterdir()])
 
-    return get_response(status.HTTP_200_OK, list(set1 - set2))
+    return get_response(status.HTTP_200_OK, json.dumps(list(set1 - set2)))
 
 
 @app.get('/dif_package')
@@ -177,7 +178,7 @@ def dif_package(uname, sname1, pname1, sname2, pname2):
     set2 = set(proc.stdout.split())
 
     # Get difference
-    return get_response(status.HTTP_200_OK, list(set1 - set2))
+    return get_response(status.HTTP_200_OK, json.dumps(list(set1 - set2)))
 
 
 @app.get('/size_package')
@@ -200,13 +201,13 @@ def size_package(uname, sname, pname):
 
     output = json.loads(proc.stdout)
     closure_size = sum(path["closureSize"] for path in output)
-    return get_response(status.HTTP_200_OK, closure_size)
+    return get_response(status.HTTP_200_OK, str(closure_size))
 
 
 @app.get('/package_exists')
 def package_exists(uname, sname, pname):
     store_path1 = Path(f'{nix_stores_path}/{uname}/{sname}/nix/store')
     for path in store_path1.iterdir():
-        if pname in path:
-            return get_response(status.HTTP_400_BAD_REQUEST, True)
-    return get_response(status.HTTP_400_BAD_REQUEST, False)
+        if pname in str(path):
+            return get_response(status.HTTP_200_OK, 'True')
+    return get_response(status.HTTP_200_OK, 'False')

@@ -2,3 +2,4 @@
 .idea/
 nix_stores/
 users.db
+stores.db
