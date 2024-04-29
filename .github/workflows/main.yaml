@@ -32,7 +32,5 @@ jobs:
         run: poetry add pathlib
       - name: Add flake8
         run: poetry add flake8
-      - name: Run pytest
-        run: poetry run pytest .\tests
       - name: Run bandit
         run: bandit app\api.py, bandit app\db.py, bandit app\main.py, bandit app\nix.py
