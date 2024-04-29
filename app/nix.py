@@ -11,7 +11,7 @@ def run_command(command):
     proc = subprocess.run(
         command,
         capture_output=True,
-        text=True)  #nosec
+        text=True, shell=True)  #nosec
     return proc.stdout, proc.returncode
 
 

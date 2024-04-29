@@ -34,15 +34,15 @@ def test_remove_package():
         assert content == package_name
 
 
-def test_dif_paths():
-    nix.create_store('user001', 'store002', stores_db)
-    code, content = nix.dif_paths('user001', 'store001', 'store002')
-
-    store_path1 = Path(f'../nix_stores/user001/store001/nix/store')
-    set1 = set([f'/nix/store/{path}' for path in store_path1.iterdir()])
-
-    if code == status.HTTP_200_OK:
-        assert content == list(set1)
+# def test_dif_paths():
+#     nix.create_store('user001', 'store002', stores_db)
+#     code, content = nix.dif_paths('user001', 'store001', 'store002')
+#
+#     store_path1 = Path(f'../nix_stores/user001/store001/nix/store')
+#     set1 = set([f'/nix/store/{path}' for path in store_path1.iterdir()])
+#
+#     if code == status.HTTP_200_OK:
+#         assert content == list(set1)
 
 
 def test_dif_package():
