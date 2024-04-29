@@ -14,8 +14,24 @@ jobs:
         run: pip install poetry
       - name: Install dependencies
         run: poetry install
-      - name: Add dependencies
-        run: poetry add bandit, poetry add pytest, poetry add fastapi, poetry add openapi, poetry add starlette, poetry add bcrypt, poetry add uvicorn, poetry add pathlib, poetry add flake8
+      - name: Add pytest
+        run: poetry add pytest
+      - name: Add bandit
+        run: poetry add bandit
+      - name: Add fastapi
+        run: poetry add fastapi
+      - name: Add openapi
+        run: poetry add openapi
+      - name: Add starlette
+        run: poetry add starlette
+      - name: Add bcrypt
+        run: poetry add bcrypt
+      - name: Add uvicorn
+        run: poetry add uvicorn
+      - name: Add pathlib
+        run: poetry add pathlib
+      - name: Add flake8
+        run: poetry add flake8
       - name: Run pytest
         run: poetry run pytest .\tests
       - name: Run bandit
