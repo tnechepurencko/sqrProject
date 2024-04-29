@@ -28,6 +28,14 @@ class Users:
         users = self.cursor.fetchall()
         return len(users) > 0
 
+    def return_pass_by_uname(self, uname):
+        self.cursor.execute('''
+                    SELECT password FROM users
+                    WHERE username = ?;
+                ''', uname)
+        users = self.cursor.fetchall()
+        return users
+
     def contains_by_uname(self, uname):
         self.cursor.execute('''
             SELECT * FROM users
@@ -35,6 +43,7 @@ class Users:
         ''', (uname,))
         users = self.cursor.fetchall()
         return len(users) > 0
+
 
 
 class Stores:

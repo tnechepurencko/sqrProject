@@ -3,6 +3,7 @@ from starlette import status
 from starlette.responses import Response
 
 from db import Users, Stores
+import bcrypt
 import nix
 
 app = FastAPI()
@@ -26,7 +27,8 @@ def get_response(code, content):
 
 @app.get('/login')
 def login(uname, pwd):
-    if users_db.contains_by_uname_pwd(uname, pwd):
+    user_bytes = pwd.encode('utf-8')
+    if users_db.contains_by_uname(uname) and bcrypt.checkpw(user_bytes, users_db.return_pass_by_uname(uname)[0]):
         return get_response(status.HTTP_200_OK, two_param_check(uname, pwd))
     return get_response(status.HTTP_401_UNAUTHORIZED, 'No such user')
 
@@ -42,7 +44,10 @@ def logout(uname):
 def registration(uname, pwd):
     if users_db.contains_by_uname(uname):
         return get_response(status.HTTP_409_CONFLICT, 'Username already exists')
-    users_db.insert(uname, pwd)
+    bytes_pwd = pwd.encode('utf-8')
+    salt = bcrypt.gensalt()
+    hashed_password = bcrypt.hashpw(bytes_pwd, salt)
+    users_db.insert(uname, hashed_password)
     return get_response(status.HTTP_200_OK, two_param_check(uname, pwd))
 
 
