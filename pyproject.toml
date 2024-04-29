@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "nix-store-explorer"
+name = "app"
 version = "0.1.0"
 description = "A service for exploring Nix stores"
 authors = ["Your Name <you@example.com>"]
