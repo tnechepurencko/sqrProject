@@ -13,7 +13,7 @@ jobs:
       - name: Install Poetry
         run: pip install poetry
       - name: Install dependencies
-        run: poetry install, poetry add bandit, poetry add pytest
+        run: poetry install, poetry add pytest, poetry add bandit
       - name: Run pytest
         run: poetry run pytest .\tests
       - name: Run bandit
