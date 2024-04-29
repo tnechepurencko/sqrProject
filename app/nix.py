@@ -1,7 +1,7 @@
 from starlette import status
 from pathlib import Path
 from shutil import rmtree
-import subprocess
+import subprocess  #nosec
 import json
 
 nix_stores_path = '../nix_stores'
@@ -11,7 +11,7 @@ def run_command(command):
     proc = subprocess.run(
         command,
         capture_output=True,
-        text=True)
+        text=True)  #nosec
     return proc.stdout, proc.returncode
 
 

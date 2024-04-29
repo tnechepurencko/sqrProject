@@ -1,0 +1,22 @@
+name: nix-store-explorer
+
+on: [ push, pull_request ]
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Python
+      uses: actions/setup-python@v2
+        with:
+        python-version: '3.11'
+          - name: Install Poetry
+            run: pip install poetry
+          - name: Install dependencies
+            run: poetry install, poetry add bandit, poetry add pytest, poetry add fastapi, poetry add openapi,
+            poetry add starlette, poetry add bcrypt, poetry add uvicorn, poetry add pathlib, poetry add nixpkgs,
+            poetry add flake8
+          - name: Run pytest
+            run: poetry run pytest .\tests
+          - name: Run bandit
+            run: bandit app\api.py, bandit app\db.py, bandit app\main.py, bandit app\nix.py
