@@ -3,7 +3,7 @@ import sqlite3
 
 class Users:
     def __init__(self):
-        self.conn = sqlite3.connect('users.db', check_same_thread=False)
+        self.conn = sqlite3.connect('../users.db', check_same_thread=False)
         self.cursor = self.conn.cursor()
         self.cursor.execute('''
             CREATE TABLE IF NOT EXISTS users (
@@ -39,7 +39,7 @@ class Users:
 
 class Stores:
     def __init__(self):
-        self.conn = sqlite3.connect('stores.db', check_same_thread=False)
+        self.conn = sqlite3.connect('../stores.db', check_same_thread=False)
         self.cursor = self.conn.cursor()
         self.cursor.execute('''
             CREATE TABLE IF NOT EXISTS stores (
